@@ -12,11 +12,107 @@ sudo gem install evalmimic
 
 == USAGE
 
+Use define_eval_method to add a eval like method to the class or as global function:
 
+  class X
+    define_eval_method :my_eval
+    ...
+  end
 
+Define a method named internal_eval to handle the calls
 
+  class X
+    define_eval_method :my_eval
 
+    def internal_eval(binding_, args)
+       # binding_ is the original binding of the caller of my_eval
+       # args is an array of the arguments passed to my_eval
+    end
+  end
 
+Also, it can be use outside of a class, in analog way:
+
+  define_eval_method :my_eval
+
+  def internal_eval(binding_, args)
+     # binding_ is the original binding of the caller of my_eval
+     # args is an array of the arguments passed to my_eval
+  end
+
+=== Example 1
+
+Creating your own implementation of eval
+
+  require "rubygems"
+  require "evalmimic"
+
+  define_eval_method :my_eval
+
+  def internal_eval(b_, args)
+    b_.eval("a+b")
+  end
+
+  def foo
+    a = 4
+    b = 5
+
+    my_eval
+  end
+
+  print foo,"\n"
+
+=== Example 2
+
+Creating an Evaluator class
+
+  require "rubygems"
+  require "evalmimic"
+
+  class MyEvaluator
+    define_eval_method :eval
+
+    def internal_eval(b_, args)
+      b_.eval(args[0])
+    end
+
+  end
+
+  def foo
+    m = MyEvaluator.new
+
+    a = 4
+    b = 5
+
+    m.eval "a+b"
+
+  end
+
+  print foo,"\n"
+
+=== Example 3
+
+Hooking/monkey patching of the original eval
+
+  require "rubygems"
+  require "evalmimic"
+
+  alias original_eval eval
+  define_eval_method :eval
+
+  def internal_eval(b_, args)
+    print "eval called with code = #{args[0].inspect}\n"
+
+    args[1] = args[1] || b_
+
+    original_eval(*args)
+  end
+
+  def foo
+    a = 4
+    eval "a"
+  end
+
+  print foo,"\n"
 
 == LICENSE:
 
