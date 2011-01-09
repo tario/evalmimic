@@ -1,0 +1,25 @@
+= evalmimic
+
+* http://github.com/tario/evalmimic
+
+== DESCRIPTION:
+
+ Evalmimic allow the implementation of eval like methods, solves the common problem of binding retrieve: in ruby you can't obtain the binding of the caller, or if you can, is some tricky
+
+== INSTALL:
+
+sudo gem install evalmimic
+
+== USAGE
+
+
+
+
+
+
+
+== LICENSE:
+
+Copyright (c) 2011 Dario Seminara
+
+evalmimic
