@@ -1,6 +1,6 @@
 require "evalmimic"
 
-descrive Evalmimic, "evalmimic" do
+describe Evalmimic, "evalmimic" do
 
   class X
   end
