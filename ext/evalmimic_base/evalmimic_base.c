@@ -1,7 +1,30 @@
 #include "ruby.h"
+#include <env.h>
+#include <node.h>
 
 ID id_to_s;
 ID id_binding;
+
+struct BLOCK {
+    NODE *var;
+    NODE *body;
+    VALUE self;
+    struct FRAME frame;
+    struct SCOPE *scope;
+    VALUE klass;
+    NODE *cref;
+    int iter;
+    int vmode;
+    int flags;
+    int uniq;
+    struct RVarmap *dyna_vars;
+    VALUE orig_thread;
+    VALUE wrapper;
+    VALUE block_obj;
+    struct BLOCK *outer;
+    struct BLOCK *prev;
+};
+
 
 VALUE binding_recall(argc, argv, recv)
 	int argc;
@@ -10,6 +33,13 @@ VALUE binding_recall(argc, argv, recv)
 {
 
 	VALUE bind = rb_funcall(recv, id_binding,0);
+
+	struct BLOCK* data;
+	Data_Get_Struct(bind, struct BLOCK, data);
+
+	// change the self of the binding to match the real self of the caller
+	data->self = data->frame.prev->prev->self;
+
 	return rb_funcall(recv, rb_intern("internal_eval"), 2, bind, rb_ary_new4(argc, argv) );
 }
 
