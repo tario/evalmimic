@@ -51,10 +51,19 @@ VALUE define_eval_method(VALUE self, VALUE name) {
 	return Qnil;
 }
 
+VALUE obj_define_eval_method(VALUE self, VALUE name) {
+
+
+	VALUE str = rb_funcall(name, id_to_s, 0);
+	rb_define_method(rb_cObject, RSTRING(str)->ptr, binding_recall, -1);
+	return Qnil;
+}
+
 
 void Init_evalmimic_base() {
 	id_to_s = rb_intern("to_s");
 	id_binding = rb_intern("binding");
 
 	rb_define_method(rb_cClass, "define_eval_method", define_eval_method, 1);
+	rb_define_method(rb_cObject, "define_eval_method", obj_define_eval_method, 1);
 }
