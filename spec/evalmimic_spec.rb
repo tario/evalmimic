@@ -6,8 +6,7 @@ describe Evalmimic, "evalmimic" do
   end
 
   it "should allow define of alternate eval using blocks" do
-    X.define_eval_method :alternate_eval do |*args|
-    end
+    X.define_eval_method :alternate_eval
   end
 
   class X2
@@ -16,16 +15,17 @@ describe Evalmimic, "evalmimic" do
   end
 
   it "should allow define of alternate eval using internal methods" do
-    X2.define_eval_method :alternate_eval, :internal_eval
+    X2.define_eval_method :alternate_eval
   end
 
   class X3
+    def internal_eval(code,binding,file,line)
+
+    end
   end
 
   it "should recall eval with default arguments" do
-    X3.define_eval_method :alternate_eval do |args|
-      args
-    end
+    X3.define_eval_method :alternate_eval
 
     x = X3.new
 
