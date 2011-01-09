@@ -43,6 +43,7 @@ VALUE binding_recall(argc, argv, recv)
 	return rb_funcall(recv, rb_intern("internal_eval"), 2, bind, rb_ary_new4(argc, argv) );
 }
 
+/* Define a new eval method in current class scope (see README and examples) */
 VALUE define_eval_method(VALUE self, VALUE name) {
 
 
@@ -51,6 +52,7 @@ VALUE define_eval_method(VALUE self, VALUE name) {
 	return Qnil;
 }
 
+/* Define a new global eval method (see README and examples) */
 VALUE obj_define_eval_method(VALUE self, VALUE name) {
 
 
@@ -64,6 +66,8 @@ void Init_evalmimic_base() {
 	id_to_s = rb_intern("to_s");
 	id_binding = rb_intern("binding");
 
+	/* Define a new eval method in current class scope (see README and examples) */
 	rb_define_method(rb_cClass, "define_eval_method", define_eval_method, 1);
+	/* Define a new global eval method (see README and examples) */
 	rb_define_method(rb_cObject, "define_eval_method", obj_define_eval_method, 1);
 }
