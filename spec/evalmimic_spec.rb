@@ -10,7 +10,8 @@ describe Evalmimic, "evalmimic" do
   end
 
   class X2
-    def internal_eval(code,binding,file,line)
+    def internal_eval(*args)
+      args
     end
   end
 
@@ -19,8 +20,8 @@ describe Evalmimic, "evalmimic" do
   end
 
   class X3
-    def internal_eval(code,binding,file,line)
-
+    def internal_eval(*args)
+      args
     end
   end
 
@@ -30,10 +31,10 @@ describe Evalmimic, "evalmimic" do
     x = X3.new
 
     args = x.alternate_eval "test"
-    args[:args].should be == ["test"]
+    args[1].should be == ["test"]
 
     a = 4
-    args[:binding].eval("a").should be == 4
+    args[0].eval("a").should be == 4
 
   end
 
