@@ -6,9 +6,3 @@ require "evalmimic_base"
 module Evalmimic
   VERSION = '0.0.1'
 end
-
-class Class
-  def define_eval_method
-
-  end
-end
