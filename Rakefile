@@ -6,7 +6,7 @@ require 'rake/gempackagetask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'evalmimic'
-  s.version = '0.0.1'
+  s.version = '0.1.0'
   s.author = 'Dario Seminara'
   s.email = 'darios_3@gmail.com'
   s.platform = Gem::Platform::RUBY
